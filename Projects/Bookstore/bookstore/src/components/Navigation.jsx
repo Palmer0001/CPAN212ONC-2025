@@ -24,11 +24,13 @@ const Navigation = () => {
         <Link to="/">Home</Link>
         <Link to="/books">All Books</Link>
         <Link to="/books/add">Add Book</Link>
+        <Link to="/shop">Shop</Link> {/* New link for the shop section */}
+        <Link to="/cart">Shopping Cart</Link> {/* New link for the Shopping Cart page */}
 
         {isAuthenticated ? (
           <>
             <span>Hello, {userName}!</span>
-            <Link to="/logout">Logout</Link> {}
+            <Link to="/logout">Logout</Link>
           </>
         ) : (
           <>

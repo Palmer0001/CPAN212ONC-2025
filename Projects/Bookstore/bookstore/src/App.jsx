@@ -10,6 +10,8 @@ import Register from './pages/Register';
 import BookDetail from './pages/BookDetails';
 import EditBook from './pages/EditBook';
 import Logout from './pages/Logout';
+import ShoppingCart from './pages/ShoppingCart';
+import Checkout from './pages/Checkout';
 const App = () => (
   <Router>
     <div className="app">
@@ -24,6 +26,8 @@ const App = () => (
           <Route path="/books/:id" element={<BookDetail />} />
           <Route path="/books/edit/:id" element={<EditBook />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path="/cart" element={<ShoppingCart />} />
+          <Route path="/checkout" element={<Checkout />} />
         
         </Routes>
       </main>
