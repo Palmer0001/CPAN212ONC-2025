@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const ShoppingCart = () => {
+
   const [cartItems, setCartItems] = useState([
     {
       id: 1,
@@ -15,6 +16,14 @@ const ShoppingCart = () => {
       id: 2,
       title: "Book 2",
       price: 10.99,
+      quantity: 1,
+      rating: 0,
+      feedback: "",
+    },
+    {
+      id: 3,
+      title: "Book 3",
+      price: 12.99,
       quantity: 1,
       rating: 0,
       feedback: "",
