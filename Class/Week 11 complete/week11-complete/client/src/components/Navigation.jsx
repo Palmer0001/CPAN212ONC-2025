@@ -1,3 +1,4 @@
+// components/Navigation.js
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
@@ -14,19 +15,15 @@ const Navigation = () => {
   return (
     <header className="navigation">
       <h1 className="brand-title">Bookstore</h1>
-      <nav style={{ display: "flex", gap: "15px", alignItems: "center" }}>
+      <nav>
         <Link to="/">Home</Link>
         <Link to="/books">All Books</Link>
         <Link to="/books/add">Add Book</Link>
-        <Link to="/shop">Shop</Link>
-        <Link to="/cart">Shopping Cart</Link>
 
         {isAuthenticated ? (
           <>
             <span>Hello, {userName}!</span>
-            <button onClick={handleLogout} style={{ cursor: "pointer" }}>
-              Logout
-            </button>
+            <button onClick={handleLogout}>Logout</button>
           </>
         ) : (
           <>

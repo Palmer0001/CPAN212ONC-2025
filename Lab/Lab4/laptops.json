@@ -1,0 +1,30 @@
+[
+    {
+      "brand": "Dell",
+      "model": "XPS 13",
+      "processor": "Intel Core i7",
+      "ram": "16GB",
+      "storage": "512GB SSD",
+      "price": 1299.99,
+      "stock": 10
+    },
+    {
+      "brand": "Apple",
+      "model": "MacBook Pro",
+      "processor": "M1",
+      "ram": "16GB",
+      "storage": "1TB SSD",
+      "price": 1999.99,
+      "stock": 5
+    },
+    {
+      "brand": "HP",
+      "model": "Spectre x360",
+      "processor": "Intel Core i7",
+      "ram": "16GB",
+      "storage": "512GB SSD",
+      "price": 1399.99,
+      "stock": 7
+    }
+  ]
+  

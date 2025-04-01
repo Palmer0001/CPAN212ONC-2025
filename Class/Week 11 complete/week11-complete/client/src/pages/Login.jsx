@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
-  //console.log(import.meta.env.VITE_VITE_SERVER_URL)
+  console.log(import.meta.env.VITE_VITE_SERVER_URL)
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,11 +20,11 @@ const Login = () => {
 
       const result = await response.json();
       if (response.ok) {
-      
-        localStorage.setItem('userToken', result.token);
+        // Save the token to localStorage
+        localStorage.setItem('authToken', result.token);
 
         alert('Login successful!');
-        navigate("/");
+        navigate("/"); // Redirect to homepage or dashboard
       } else {
         setErrorMessage(result.message || 'Login failed.');
       }
