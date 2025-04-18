@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-
 const Homepage = () => {
   const [books, setBooks] = useState([]);
 
-  
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-     
         const token = localStorage.getItem("authToken");
 
-        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}api/books`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, 
-          },
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_SERVER_URL}http://localhost:8000/book/all`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         const data = await response.json();
         console.log(data);
 
         if (response.ok) {
-          setBooks(data.slice(0, 5)); 
+          setBooks(data.slice(0, 5));
         } else {
           console.error("Error fetching books:", data);
         }
@@ -45,8 +45,12 @@ const Homepage = () => {
           books.map((book) => (
             <div key={book._id} style={styles.bookCard}>
               <h3 style={styles.bookTitle}>{book.title}</h3>
-              <p><strong>Author:</strong> {book.author}</p>
-              <p><strong>Price:</strong> ${book.price.toFixed(2)}</p>
+              <p>
+                <strong>Author:</strong> {book.author}
+              </p>
+              <p>
+                <strong>Price:</strong> ${book.price.toFixed(2)}
+              </p>
               <Link to={`/books/${book._id}`}>View Details</Link>
             </div>
           ))

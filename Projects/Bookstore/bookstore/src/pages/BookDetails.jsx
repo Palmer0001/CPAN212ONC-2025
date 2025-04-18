@@ -18,7 +18,7 @@ const BookDetail = () => {
 
     const fetchBookDetails = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}api/books/details/${id}`);
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}http://localhost:8000/book/${id}`);
         const data = await response.json();
         setBook(data);
       } catch (error) {

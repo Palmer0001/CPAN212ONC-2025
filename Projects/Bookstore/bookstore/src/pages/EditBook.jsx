@@ -9,17 +9,16 @@ const EditBook = () => {
     genres: [],
     price: "",
     pages: "",
-    
   });
   const [errorMessage, setErrorMessage] = useState("");
-  const { id } = useParams(); 
-  const navigate = useNavigate(); 
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBookDetails = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_SERVER_URL}api/books/details/${id}`
+          `${import.meta.env.VITE_SERVER_URL}http://localhost:8000/book/${id}`
         );
         const data = await response.json();
         setBook(data);
@@ -29,7 +28,7 @@ const EditBook = () => {
     };
 
     fetchBookDetails();
-  }, [id]); 
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,20 +48,26 @@ const EditBook = () => {
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_SERVER_URL}api/books/edit/${id}`,
+        `${import.meta.env.VITE_SERVER_URL}book/${id}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, 
+            Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(book),
+          body: JSON.stringify({
+            title: book.title,
+            author: book.author,
+            publishers: book.publishers,
+            pages: book.pages,
+            genres: book.genres,
+          }),
         }
       );
 
       if (response.ok) {
         alert("Book updated successfully!");
-        navigate(`/books/${id}`); 
+        navigate(`/books/${id}`);
       } else {
         const result = await response.json();
         setErrorMessage(result.message || "Failed to update the book.");
@@ -165,15 +170,17 @@ const EditBook = () => {
           />
         </label>
 
-        { <label>
-          <strong>Description:</strong>
-          <textarea
-            name="description"
-            value={book.description}
-            onChange={handleChange}
-            style={styles.textarea}
-          />
-        </label> }
+        {
+          <label>
+            <strong>Description:</strong>
+            <textarea
+              name="description"
+              value={book.description}
+              onChange={handleChange}
+              style={styles.textarea}
+            />
+          </label>
+        }
 
         <button type="submit" style={styles.submitBtn}>
           Update Book
@@ -186,9 +193,9 @@ const EditBook = () => {
 const styles = {
   container: {
     display: "flex",
-    justifyContent: "center", 
-    alignItems: "center", 
-    minHeight: "100vh", 
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: "100vh",
     padding: "30px",
     backgroundColor: "#f4f1ea",
   },
@@ -203,7 +210,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     width: "100%",
-    maxWidth: "600px", 
+    maxWidth: "600px",
     backgroundColor: "#fff",
     padding: "20px",
     borderRadius: "8px",

@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
-
 const AddBook = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: "",
-    author: "",
+    authors: "",
     publishers: "",
     genres: "",
     price: "",
     pages: "",
+    description: "",
   });
 
   const handleChange = (e) => {
@@ -21,21 +21,27 @@ const AddBook = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-    
       const token = localStorage.getItem("authToken");
       if (!token) {
         alert("You must be logged in to add a book.");
         return;
       }
 
-      
-      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}api/books/add`, {
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/book/save`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,  
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          title: formData.title,
+          authors: formData.authors.split(",").map(a => a.trim()),
+          publishers: formData.publishers.split(",").map(p => p.trim()),
+          genres: formData.genres.split(",").map(g => g.trim()),
+          price: parseFloat(formData.price),
+          pages: parseInt(formData.pages),
+          description: formData.description,
+        }),
       });
 
       const data = await response.json();
@@ -43,16 +49,16 @@ const AddBook = () => {
         alert("Book added successfully!");
         setFormData({
           title: "",
-          author: "",
+          authors: "",
           publishers: "",
           genres: "",
           price: "",
           pages: "",
+          description: "",
         });
         navigate("/");
       } else {
         alert(`Error: ${data.message}`);
-
       }
     } catch (error) {
       console.error("Error adding book:", error);
@@ -74,23 +80,23 @@ const AddBook = () => {
         />
         <input
           type="text"
-          name="author"
-          placeholder="Author"
-          value={formData.author}
+          name="authors"
+          placeholder="Authors (comma separated)"
+          value={formData.authors}
           onChange={handleChange}
           required
         />
         <input
           type="text"
           name="publishers"
-          placeholder="Publishers"
+          placeholder="Publishers (comma separated)"
           value={formData.publishers}
           onChange={handleChange}
         />
         <input
           type="text"
           name="genres"
-          placeholder="Genres"
+          placeholder="Genres (comma separated)"
           value={formData.genres}
           onChange={handleChange}
         />
@@ -101,12 +107,22 @@ const AddBook = () => {
           value={formData.price}
           onChange={handleChange}
           required
+          step="0.01"
+          min="0"
         />
         <input
           type="number"
           name="pages"
           placeholder="Pages"
           value={formData.pages}
+          onChange={handleChange}
+          required
+          min="1"
+        />
+        <textarea
+          name="description"
+          placeholder="Description"
+          value={formData.description}
           onChange={handleChange}
         />
         <button type="submit">Add Book</button>

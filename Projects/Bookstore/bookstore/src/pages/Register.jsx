@@ -13,7 +13,7 @@ const Register = () => {
 
   console.log("VITE_SERVER_URL:", import.meta.env.VITE_SERVER_URL);
 
-  const SERVER_URL = import.meta.env.VITE_SERVER_URL || "http://localhost:5000";
+  const SERVER_URL = import.meta.env.VITE_SERVER_URL || "http://localhost:8000/user/register";
   const BASE_URL = SERVER_URL?.endsWith("/") ? SERVER_URL : SERVER_URL + "/";
 
   const handleChange = (e) => {
@@ -23,22 +23,15 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${BASE_URL}api/users/register`, {
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}http://localhost:8000/user/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
+  
       const data = await response.json();
-
       if (response.ok) {
         alert("Registration successful!");
-        setFormData({
-          first_name: "",
-          last_name: "",
-          email: "",
-          password: "",
-        });
         navigate("/login");
       } else {
         alert(`Error: ${data.message || "Registration failed"}`);

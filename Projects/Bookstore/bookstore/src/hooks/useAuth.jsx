@@ -2,6 +2,7 @@ import { jwtDecode } from "jwt-decode";
 
 const useAuth = () => {
   const token = localStorage.getItem("authToken");
+  
 
   if (!token) {
     return { isAuthenticated: false, userName: "Guest" };
@@ -12,7 +13,11 @@ const useAuth = () => {
     const currentTime = Date.now() / 1000;
 
     if (decodedToken.exp && decodedToken.exp > currentTime) {
-      return { isAuthenticated: true, userName: decodedToken.first_name || "User" };
+      return { 
+        isAuthenticated: true, 
+        userName: decodedToken.first_name || "User",
+        userId: decodedToken.userId 
+      };
     } else {
       localStorage.removeItem("authToken");
       return { isAuthenticated: false, userName: "Guest" };
@@ -25,4 +30,3 @@ const useAuth = () => {
 };
 
 export default useAuth;
-

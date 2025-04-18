@@ -8,7 +8,8 @@ const Navigation = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
-    navigate("/");
+    localStorage.removeItem("userName");
+    navigate("/login");
   };
 
   return (
@@ -18,8 +19,7 @@ const Navigation = () => {
         <Link to="/">Home</Link>
         <Link to="/books">All Books</Link>
         <Link to="/books/add">Add Book</Link>
-        <Link to="/shop">Shop</Link>
-        <Link to="/cart">Shopping Cart</Link>
+       
 
         {isAuthenticated ? (
           <>

@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 
 const AllBooks = () => {
   const [books, setBooks] = useState([]);
-  console.log(import.meta.env.VITE_SERVER_URL)
+  console.log(import.meta.env.VITE_SERVER_URL);
 
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}api/books/all`);
+        const response = await fetch(
+          `${import.meta.env.VITE_SERVER_URL}http://localhost:8000/book/all`
+        );
         const data = await response.json();
         setBooks(data);
       } catch (error) {

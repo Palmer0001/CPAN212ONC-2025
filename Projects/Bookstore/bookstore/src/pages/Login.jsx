@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
-  //console.log(import.meta.env.VITE_VITE_SERVER_URL)
+  
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,17 +12,16 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}api/users/login`, {
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}http://localhost:8000/user/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
-
+  
       const result = await response.json();
       if (response.ok) {
-      
-        localStorage.setItem('userToken', result.token);
-
+        localStorage.setItem('authToken', result.token);
+        localStorage.setItem('userName', result.userName);
         alert('Login successful!');
         navigate("/");
       } else {
@@ -33,7 +32,7 @@ const Login = () => {
       setErrorMessage('Error logging in. Please try again.');
     }
   };
-
+  
   return (
     <div className="login">
       <h2>Login to Your Account</h2>
